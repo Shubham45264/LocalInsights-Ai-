@@ -1,35 +1,41 @@
-import React, {useState, useEffect} from "react";
-// Corrected the import to use a relative path.
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar.jsx";
+import LocationAnalysisCard from "../../components/LocationAnalysisCard.jsx";
+
 
 function Dashboard() {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/data')
-    .then(response => response.json())
-    .then(data => setData(data))
-  },[]);
+    fetch("http://127.0.0.1:5000/api/data")
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   return (
     <div className="flex min-h-screen">
-      {/* Renders the new Sidebar component */}
+      {/* Sidebar */}
       <Sidebar />
 
-      {/* Renders the main content for the dashboard welcome page */}
-      <main className="flex-1 bg-gray-100 p-6">
-        <h1 className="text-3xl font-semibold mb-4">Welcome to Your Dashboard</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded-lg shadow">📊 Business Recommendation Card</div>
-          <div className="bg-white p-4 rounded-lg shadow">👥 Demographics Overview</div>
-          <div className="bg-white p-4 rounded-lg shadow">🚶 Footfall Analysis</div>
-          <div className="bg-white p-4 rounded-lg shadow">🏪 Competitor Heatmap</div>
-        </div>
-        <p> {data.message} </p>
+      {/* Main Content */}
+      <main className="flex-1 bg-gray-100 p-8">
+        <h1 className="text-3xl font-semibold  text-gray-800">
+          Welcome to Your Dashboard
+        </h1>
+
+        {/* Centered Card Section */}
+          {/* <div className="w-full max-w-3xl">
+            <LocationAnalysisCard />
+          </div> */}
+
+        {/* API Data Message */}
+        <p className="mt-8 text-gray-600 text-lg text-center">
+          {data.message}
+        </p>
       </main>
     </div>
   );
 }
 
 export default Dashboard;
-
